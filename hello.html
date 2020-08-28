@@ -1,0 +1,87 @@
+<link href="todo.css" rel="stylesheet">
+
+<div class="container-fluid" ng-controller="HomeController">
+
+    <noscript>
+           <div class="nojs">Javascript is either disabled or not supported in your browser. Please enable it or use a Javascript enabled browser.</div>
+    </noscript>
+
+    <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Discover By:</button>
+	<hr>
+	<div uib-collapse="!isCollapsed">
+        <div class="well well-lg">
+        <div class="form-row align-items-center">
+            <div  class="col-auto my-1" >
+                <label class="mr-sm-2" for="inlineFormCustomSelect">By Genre: </label><br>
+                    <select ng-model="genre" ng-change="testFunction();">
+                        <option  ng-repeat="genre in genres" value="{{genre.id}}" > {{ genre.name }} </option>
+                    </select>
+                <br>
+                <label class="mr-sm-2" for="inlineFormCustomSelect">By Year: </label>
+                    <p class="input-group">
+                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                        ng-model="dt" is-open="status.opened"
+                        datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="testFunction()"/>
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+            </div>
+            </div>
+            </div>
+	</div>
+
+   <div class="container" ng-model="ded">
+
+        <div class="row">
+            <div class="col-4" ng-repeat="detail in details" >
+               <div class="card border-primary mb-3" style="width: 26rem;height: 100rem;">
+                <a href="https://www.themoviedb.org/movie/{{ detail.id }}" target="_blank"><img class="card-img-top" ng-src="https://image.tmdb.org/t/p/w200{{detail.poster_path}}" class="thumbnail animated flip movie-poster"></a>
+
+               <div class="card-body">
+                   <span class="span-outer">
+                    <a href="https://www.themoviedb.org/movie/{{ detail.id }}" target="_blank" class="card-title">{{ detail.title.toUpperCase() }}</a>
+                   </span> {{ detail.year }}
+
+                   <p><strong>Released on:</strong> {{ detail.release_date }} </p>
+
+
+
+                   <p class="outer-p" class="card-text">
+                       <div class="inner-p">
+                           <span class="label label-primary">Overview :</span> {{ detail.overview }}
+                       </div>
+
+                       <div class="inner-p">
+                           <span class="label label-primary">Popularity :</span> {{ detail.popularity }}
+                       </div>
+
+                       <div class="inner-p" >
+                           <span class="label label-primary">Genre :</span> {{ detail.genre_ids.toString() }}
+                       </div>
+                   </p>
+
+                           <div class="card-block" style="position: absolute; bottom: 0; left: 5;">
+                               <p class="outer-p-2">
+                                   <br>
+                                   <strong>Rating</strong>: <span class="label label-success">{{ detail.vote_average }}</span>
+
+                               </p>
+
+                               <p class="outer-p-3">
+                                   <a ng-href="https://www.youtube.com/results?search_query={{ detail.title }}" target="_blank" class="btn btn-primary btn-block text-truncate mt-auto">Watch On YouTube!</a>
+                               </p>
+                           </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+   </div>
+
+
+
+<div class="footer" ng-if="main.total_items" >
+   <ul uib-pagination total-items="main.total_items" ng-model="main.page" max-size="5" items-per-page ="20" class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></ul>
+</div>
+</div>
+

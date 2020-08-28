@@ -1,0 +1,74 @@
+<div class="container-fluid" ng-controller="MovieController">
+
+    <noscript>
+           <div class="nojs">Javascript is either disabled or not supported in your browser. Please enable it or use a Javascript enabled browser.</div>
+    </noscript>
+
+
+       <div class="input-group search-bar">
+           <input type="text" ng-model="search" ng-model-options="{ debounce: 800 }" onclick= "select()"  class="form-control" placeholder="Enter full movie name" autofocus />
+           <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
+       </div>
+       <br><br>
+
+       <div id="main-info">
+           <div ng-if="!details">
+           Loading results...
+           </div>
+       </div>
+
+   <div class="container" ng-model="ded">
+
+        <div class="row">
+            <div class="col-4" ng-repeat="detail in details" >
+               <div class="card border-primary mb-3" style="width: 26rem;height: 100rem;">
+                <a href="https://www.themoviedb.org/movie/{{ detail.id }}" target="_blank"><img class="card-img-top" ng-src="https://image.tmdb.org/t/p/w200{{detail.poster_path}}" class="thumbnail animated flip movie-poster"></a>
+
+               <div class="card-body">
+                   <span class="span-outer">
+                    <a href="https://www.themoviedb.org/movie/{{ detail.id }}" target="_blank" class="card-title">{{ detail.title.toUpperCase() }}</a>
+                   </span> {{ detail.year }}
+
+                   <p><strong>Released on:</strong> {{ detail.release_date }} </p>
+
+
+
+                   <p class="outer-p" class="card-text">
+                       <div class="inner-p">
+                           <span class="label label-primary">Overview :</span> {{ detail.overview }}
+                       </div>
+
+                       <div class="inner-p">
+                           <span class="label label-primary">Popularity :</span> {{ detail.popularity }}
+                       </div>
+
+                       <div class="inner-p" >
+                           <span class="label label-primary">Genre :</span> {{ detail.genre_ids.toString() }}
+                       </div>
+                   </p>
+
+                           <div class="card-block" style="position: absolute; bottom: 0; left: 5;">
+                               <p class="outer-p-2">
+                                   <br>
+                                   <strong>Rating</strong>: <span class="label label-success">{{ detail.vote_average }}</span>
+
+                               </p>
+
+                               <p class="outer-p-3">
+                                   <a ng-href="https://www.youtube.com/results?search_query={{ detail.title }}" target="_blank" class="btn btn-primary btn-block text-truncate mt-auto">Watch On YouTube!</a>
+                               </p>
+                           </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+   </div>
+
+
+
+<div class="footer" ng-if="main.total_items" >
+    <ul uib-pagination total-items="main.total_items" ng-model="main.page" max-size="5" items-per-page ="20" class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></ul>
+</div>
+
+
+</div>
